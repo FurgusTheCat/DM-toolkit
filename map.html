@@ -7,19 +7,26 @@
   <link rel="stylesheet" href="styles.css" />
   <style>
     main{display:flex;gap:16px;padding:16px;align-items:flex-start}
-    .controls{width:320px;background:var(--panel);padding:12px;border-radius:8px}
+    .controls{width:360px;background:var(--panel);padding:12px;border-radius:8px}
     .row{display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
     .row label{display:flex;flex-direction:column;color:var(--muted);font-size:0.92rem}
     .row input, .row select{margin-top:6px;padding:6px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:inherit}
     button{padding:8px;border-radius:6px;border:none;background:var(--accent);color:#002;cursor:pointer}
     .canvas-area{flex:1;display:flex;gap:12px;align-items:flex-start}
-    #mapCanvas{border-radius:6px;background:#000;box-shadow:0 6px 30px rgba(2,6,23,0.6);cursor:crosshair}
+    .map-wrap{position:relative;border-radius:6px;background:#000;box-shadow:0 6px 30px rgba(2,6,23,0.6);overflow:hidden}
+    #mapCanvas{display:block;cursor:crosshair;background:transparent}
     .panel{background:var(--panel);padding:10px;border-radius:8px;min-height:80px;color:var(--muted)}
     .small{font-size:0.9rem;color:var(--muted)}
     .mode-btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:6px;border-radius:6px;color:var(--muted);cursor:pointer}
     .mode-btn.active{background:var(--accent);color:#002}
     nav{padding:12px}
     a.back{color:var(--muted);text-decoration:none}
+    .control-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    /* zoom controls on top-right corner of map */
+    .zoom-controls-overlay{position:absolute;right:8px;top:8px;display:flex;gap:6px;z-index:30}
+    .zoom-controls-overlay button{background:rgba(0,0,0,0.55);border:1px solid rgba(255,255,255,0.06);padding:6px;border-radius:6px;color:var(--muted);width:36px;height:36px;display:flex;align-items:center;justify-content:center}
+    /* tooltip */
+    #propTooltip{position:absolute;pointer-events:none;padding:6px 8px;background:rgba(0,0,0,0.85);color:white;border-radius:6px;font-size:0.9rem;z-index:40;display:none;white-space:nowrap}
   </style>
 </head>
 <body>
@@ -29,17 +36,17 @@
     <section class="controls">
       <h2>Map Generator — Doors & Secrets</h2>
 
-      <div class="row">
+      <div class="row control-grid">
         <label>Width (tiles): <input id="mapWidth" type="number" min="24" max="160" value="64"></label>
         <label>Height (tiles): <input id="mapHeight" type="number" min="24" max="120" value="48"></label>
       </div>
 
-      <div class="row">
-        <label>Tile Size (px): <input id="tileSize" type="number" min="6" max="24" value="12"></label>
+      <div class="row control-grid">
+        <label>Tile Size (px): <input id="tileSize" type="number" min="6" max="32" value="12"></label>
         <label>Rooms: <input id="roomCount" type="number" min="3" max="120" value="14"></label>
       </div>
 
-      <div class="row">
+      <div class="row control-grid">
         <label>Min Room Size: <input id="minRoom" type="number" min="3" max="20" value="4"></label>
         <label>Max Room Size: <input id="maxRoom" type="number" min="4" max="30" value="12"></label>
       </div>
@@ -47,6 +54,16 @@
       <div class="row">
         <label><input id="placeProps" type="checkbox" checked> Place props</label>
         <label>Prop density: <input id="propDensity" type="range" min="0" max="1" step="0.1" value="0.4"></label>
+      </div>
+
+      <div class="row">
+        <label>Layout style:
+          <select id="hallwayStyle">
+            <option value="manmade" selected>Man-Made</option>
+            <option value="cave">Cave-Layout</option>
+          </select>
+        </label>
+        <label><input id="mainRoom" type="checkbox"> Include main room (boss)</label>
       </div>
 
       <div class="row">
@@ -67,16 +84,20 @@
         <label><input id="revealSecrets" type="checkbox"> Reveal secrets</label>
         <button id="autoDoors">Auto-place doors</button>
       </div>
-
-      <div class="row small">
-        <div id="mapInfo" class="small">No map yet</div>
-      </div>
     </section>
 
     <section class="canvas-area">
-      <canvas id="mapCanvas" tabindex="0" title="Dungeon map (click tiles to edit/select)"></canvas>
+      <div class="map-wrap" id="mapWrap" style="width:100%;min-width:480px;min-height:360px;">
+        <canvas id="mapCanvas" tabindex="0" title="Dungeon map (click tiles to edit/select)"></canvas>
+        <div class="zoom-controls-overlay" id="zoomOverlay">
+          <button id="zoomIn" title="Zoom in">＋</button>
+          <button id="zoomOut" title="Zoom out">－</button>
+          <button id="resetZoom" title="Reset zoom">◻</button>
+        </div>
+        <div id="propTooltip"></div>
+      </div>
 
-      <aside style="width:320px;display:flex;flex-direction:column;gap:12px">
+      <aside style="width:360px;display:flex;flex-direction:column;gap:12px">
         <div class="panel">
           <h3>Selection</h3>
           <pre id="selInfo">No selection</pre>
@@ -97,7 +118,7 @@
 
         <div class="panel">
           <h3>Tips</h3>
-          <div class="small">Auto-place doors will add doors where corridors meet room edges. Use "Place Door" mode to add/override manually. Secret endpoints join to form hidden tunnels when you click "Generate Map" (they are persistent in export).</div>
+          <div class="small">Man-Made rooms favor barrels/crates/tables/shelves; Cave-Layout rooms favor stalagmites and crystals. Shelves will be placed on walls only; tables are not placed in caves.</div>
         </div>
       </aside>
     </section>

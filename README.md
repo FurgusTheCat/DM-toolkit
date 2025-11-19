@@ -3,9 +3,9 @@
 
 What I changed:
 - Split functionality into three separate pages: map.html (map builder), npcs.html (NPC generator), room.html (room descriptor).
-- Map builder now supports doors (place manually or auto-place where corridors meet rooms) and secret passage endpoints that can be toggled/revealed. Exports include doors, secret endpoints and props.
+- Map builder now supports doors (place manually or auto-place where corridors meet rooms) and secret passage endpoints that can be toggled/revealed. Exports include doors, secret endpoints and pro[...]
 - NPC generator supports tags. You can add custom tags, attach tags to NPCs, filter the generated list by tags, and export NPC JSON.
-- Room descriptor supports tag-driven templates (dungeon, tavern, temple, library, etc.). You can toggle tags to bias the description, add props and NPC hints, generate short/medium/long descriptions and export.
+- Room descriptor supports tag-driven templates (dungeon, tavern, temple, library, etc.). You can toggle tags to bias the description, add props and NPC hints, generate short/medium/long descriptio[...]
 
 Files added/updated:
 - index.html — landing page linking to the three tools

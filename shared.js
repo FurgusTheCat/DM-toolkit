@@ -1,4 +1,7 @@
-/* shared utilities used across pages */
+/* shared utilities used across pages
+   - createPRNG: deterministic PRNG used by map/room generators
+   - downloadJSON / downloadText: Blob + anchor based download compatible with Chromebooks
+*/
 (function(){
   window.SHARED = {
     createPRNG(seed){
@@ -18,11 +21,20 @@
     },
     clamp(v,min,max){ return Math.max(min, Math.min(max, v)); },
     downloadJSON(name, obj){
-      const blob = new Blob([JSON.stringify(obj, null, 2)], {type:'application/json'});
+      const text = JSON.stringify(obj, null, 2);
+      const blob = new Blob([text], {type:'application/json'});
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url; a.download = name; a.click();
-      URL.revokeObjectURL(url);
+      a.href = url; a.download = name; document.body.appendChild(a); a.click();
+      setTimeout(()=>{ URL.revokeObjectURL(url); try{ a.remove(); }catch(e){} }, 500);
+    },
+    downloadText(name, text, mime){
+      mime = mime || 'text/plain';
+      const blob = new Blob([text], {type:mime});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = name; document.body.appendChild(a); a.click();
+      setTimeout(()=>{ URL.revokeObjectURL(url); try{ a.remove(); }catch(e){} }, 500);
     }
   };
 })();
