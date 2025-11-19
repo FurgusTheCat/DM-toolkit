@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dungeon Toolkit — Room Descriptor</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    main{display:flex;gap:16px;padding:16px;align-items:flex-start}
+    .controls{width:340px;background:var(--panel);padding:12px;border-radius:8px}
+    .row{display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
+    label{display:flex;flex-direction:column;color:var(--muted);font-size:0.92rem}
+    input,select,textarea{margin-top:6px;padding:6px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:inherit;width:100%}
+    button{padding:8px;border-radius:6px;border:none;background:var(--accent);color:#002;cursor:pointer}
+    .tag{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,0.04);margin-right:6px;margin-bottom:6px;cursor:pointer}
+    .tag.active{background:var(--accent);color:#002}
+    nav{padding:12px}
+    a.back{color:var(--muted);text-decoration:none}
+  </style>
+</head>
+<body>
+  <nav><a class="back" href="index.html">&larr; Back</a></nav>
+
+  <main>
+    <section class="controls">
+      <h2>Room Descriptor — Tags</h2>
+
+      <div class="row">
+        <label>Complexity:
+          <select id="descComplexity"><option value="short">Short</option><option value="medium" selected>Medium</option><option value="long">Long</option></select>
+        </label>
+      </div>
+
+      <div class="row">
+        <label>Tags (click to toggle):</label>
+        <div id="tagList" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+      </div>
+
+      <div class="row">
+        <label>Props / Notes (comma-separated): <input id="propInput" placeholder="e.g. brazier, broken table"></label>
+      </div>
+
+      <div class="row">
+        <label>NPC hints (comma-separated names/roles): <input id="npcInput" placeholder="e.g. old priest, drunken sailor"></label>
+      </div>
+
+      <div class="row">
+        <button id="genDesc">Generate Description</button>
+        <button id="exportDesc">Export as TXT</button>
+      </div>
+
+      <div class="row small">
+        <button id="randomSeed">Randomize Seed</button>
+        <div id="seedDisplay" class="small"></div>
+      </div>
+    </section>
+
+    <section style="flex:1">
+      <div style="background:var(--panel);padding:12px;border-radius:8px;min-height:320px;color:var(--muted)">
+        <h3>Generated Room Description</h3>
+        <div id="description" style="white-space:pre-wrap;margin-top:8px"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="shared.js"></script>
+  <script src="room.js"></script>
+</body>
+</html>
