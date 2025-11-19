@@ -66,9 +66,9 @@
 
   // inline SVG props
   const PROP_SVGS = {
-    stalagmite: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path d='M32 6 L46 58 L18 58 Z' fill='%2388c0a3'/></svg>",
+    stalagmite: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path d='M22 6 L42 6 L32 40 Z' fill='%2388c0a3'/></svg>",
     stalactite: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path d='M22 6 L42 6 L32 40 Z' fill='%2388c0a3'/></svg>",
-    crystal: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><polygon points='32,4 46,30 32,60 18,30' fill='%2396f2ff'/></svg>",
+    crystal: "images/crystal.png",
     barrel: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect x='14' y='18' width='36' height='28' rx='6' fill='%23b97a2f' stroke='%233d2b10' stroke-width='1'/></svg>",
     crate: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect x='12' y='16' width='40' height='32' fill='%23c49a6c' stroke='%234e3520' stroke-width='1'/></svg>",
     table: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect x='12' y='22' width='40' height='18' rx='3' fill='%238b5a2b'/></svg>",
