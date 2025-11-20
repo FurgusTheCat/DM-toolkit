@@ -328,14 +328,17 @@ const tags = [
 ];
      const parts = [];
     if (complexity === 'short'){
-      parts.push(`A ${pick(adjs,rng)} space, smelling faintly of ${pick(scents,rng)}.`);
-      if (props.length) parts.push(`You notice ${props.join(', ')}.`);
-      if (npcs.length) parts.push(`People: ${npcs.join(', ')}.`); 
+const mediumTemplates = [
+  `You step into a ${pick(adjs, rng)} room where the scent of ${pick(scents, rng)} mingles with ${pick(scents, rng)}; ${pick(items, rng)} lies nearby, and ${props.length ? props.join(', ') : 'various items'} catch your eye.`,
+  `A ${pick(adjs, rng)} and ${pick(adjs, rng)} space greets you, the smell of ${pick(scents, rng)} hangs in the air, and among the clutter you notice ${pick(items, rng)} and ${props.length ? props.join(', ') : 'assorted possessions'}.`,
+  `Within this ${pick(adjs, rng)} chamber, the aroma of ${pick(scents, rng)} lingers; ${pick(items, rng)} rests against the wall, surrounded by ${props.length ? props.join(', ') : 'miscellanea'}.`
+];
+parts.push(pick(mediumTemplates, rng));
     } else if (complexity === 'medium'){
-      parts.push(`You step into a ${pick(adjs,rng)} room; ${pick(scents,rng)} lingers in the air.`);
+      parts.push(`You find yourself in a ${pick(adjs,rng)} room; ${pick(scents,rng)} lingers in the air.`);
       parts.push(`Light falls across ${pick(items,rng)} and ${props.length ? props.join(', ') + ' are present.' : 'the room holds little in the way of furniture.'}`);
       if (activeTags.length) parts.push(`This area feels ${activeTags.join(', ')}.`);
-      if (npcs.length) parts.push(`You catch sight of ${npcs.join(', ')} here.`);
+      if (npcs.length) parts.push(`You see ${npcs.join(', ')} here.`);
     } else {
       parts.push(`The chamber is ${pick(adjs,rng)} and stretches several paces. ${pick(scents,rng)} gives it a distinct character.`);
       parts.push(`Against one wall ${pick(items,rng)} rests${props.length ? ', accompanied by ' + props.slice(0,4).join(', ') : ''}.`);
