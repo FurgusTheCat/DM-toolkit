@@ -326,41 +326,11 @@ const tags = [
   'trophy_room',
   'druid_grove'
 ];
-     
-const parts = [];
-if (complexity === 'short') {
-  // Multiple detailed sentence templates
-  const templates = [
-    `A ${pick(adjs, rng)} and ${pick(adjs, rng)} space, where the air carries the scent of ${pick(scents, rng)} mixed with ${pick(scents, rng)}.`,
-    `This ${pick(adjs, rng)} room exudes an aroma of ${pick(scents, rng)}, and the atmosphere is thick with ${pick(adjs, rng)} vibes.`,
-    `You find yourself in a ${pick(adjs, rng)}, ${pick(adjs, rng)} chamber, the smell of ${pick(scents, rng)} lingering in the air.`,
-    `The ${pick(adjs, rng)} walls are bathed in the scent of ${pick(scents, rng)} and ${pick(scents, rng)}, setting a distinct mood.`,
-    `A sense of ${pick(adjs, rng)} pervades the space, accompanied by the unmistakable fragrance of ${pick(scents, rng)}.`
-  ];
-  parts.push(pick(templates, rng));
-  
-  if (props.length) {
-    const propTemplates = [
-      `You notice ${props.join(', ')} scattered throughout the area.`,
-      `Among the furnishings are ${props.join(', ')}.`,
-      `Careful observation reveals ${props.join(', ')} in various corners.`,
-      `Lying about, you spot ${props.join(', ')}.`,
-      `The room contains ${props.join(', ')}.`
-    ];
-    parts.push(pick(propTemplates, rng));
-  }
-  
-  if (npcs.length) {
-    const npcTemplates = [
-      `People present: ${npcs.join(', ')}.`,
-      `You see ${npcs.join(', ')} here.`,
-      `Sharing the space are ${npcs.join(', ')}.`,
-      `The following individuals are here: ${npcs.join(', ')}.`,
-      `Here with you: ${npcs.join(', ')}.`
-    ];
-    parts.push(pick(npcTemplates, rng));
-  }
-}
+     const parts = [];
+    if (complexity === 'short'){
+      parts.push(`A ${pick(adjs,rng)} space, smelling faintly of ${pick(scents,rng)}.`);
+      if (props.length) parts.push(`You notice ${props.join(', ')}.`);
+      if (npcs.length) parts.push(`People: ${npcs.join(', ')}.`); 
     } else if (complexity === 'medium'){
       parts.push(`You step into a ${pick(adjs,rng)} room; ${pick(scents,rng)} lingers in the air.`);
       parts.push(`Light falls across ${pick(items,rng)} and ${props.length ? props.join(', ') + ' are present.' : 'the room holds little in the way of furniture.'}`);
