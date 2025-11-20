@@ -358,8 +358,13 @@ parts.push(pick(veryLongTemplates, rng));
       parts.push(`Small details suggest the room's purpose: ${activeTags.length ? activeTags.join(', ') + '.' : 'no obvious origin.'}`);
       if (npcs.length) parts.push(`Present are ${npcs.map(n=>`${n}`).join(', ')} — they might be hostile or friendly.`);
       if (rng.next() < 0.45) parts.push(`You find a ${pick(items,rng)} that bears ${pick(['a scratch','a faded mark','an unfamiliar sigil'],rng)}.`);
-      parts.push(`An exit is ${pick(['a heavy door','a narrow passage','a low archway','a hidden slit'],rng)}; beyond it you sense ${pick(['a draft','a murmur','silence','a faint light'],rng)}.`);
+        const VlongTemplates1 = [
+  `An exit is ${pick(['a heavy door','a narrow passage','a low archway','a hidden slit'],rng)}; beyond it you sense ${pick(['a draft','a murmur','silence','a faint light'],rng)}.`,
+  `You notice the subtle smell of ${pick(scents, rng)} lingering in the room.`,
+   ];    
+     parts.push(pick(VlongTemplates1, rng));
     }
+    
 
     // incorporate notes more directly (if user input props field contained sentences, they are included)
     const notesRaw = els.propInput.value || '';
