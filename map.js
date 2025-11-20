@@ -540,10 +540,10 @@
       const name = prop.type.charAt(0).toUpperCase() + prop.type.slice(1);
       els.propTooltip.textContent = name + (prop.linkedTo ? ' (seat)' : '');
       const wrapRect = els.mapWrap.getBoundingClientRect();
-      let left = evt.clientX - wrapRect.left + 12, top = evt.clientY - wrapRect.top + 12;
+      let left = evt.clientX - wrapRect.left, top = evt.clientY - wrapRect.top;
       const tt = els.propTooltip.getBoundingClientRect();
-      if(left + tt.width > wrapRect.width) left = evt.clientX - wrapRect.left - tt.width - 12;
-      if(top + tt.height > wrapRect.height) top = evt.clientY - wrapRect.top - tt.height - 12;
+      if(left + tt.width > wrapRect.width) left = evt.clientX - wrapRect.left - tt.width;
+      if(top + tt.height > wrapRect.height) top = evt.clientY - wrapRect.top - tt.height;
       els.propTooltip.style.left = left + 'px'; els.propTooltip.style.top = top + 'px';
     } else els.propTooltip.style.display = 'none';
   }
