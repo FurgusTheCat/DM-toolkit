@@ -328,23 +328,36 @@ const tags = [
 ];
      const parts = [];
     if (complexity === 'short'){
-const mediumTemplates = [
+const mediumTemplates1 = [
   `You step into a ${pick(adjs, rng)} room where the scent of ${pick(scents, rng)} mingles with ${pick(scents, rng)}; ${pick(items, rng)} lies nearby, and ${props.length ? props.join(', ') : 'various items'} catch your eye.`,
   `A ${pick(adjs, rng)} and ${pick(adjs, rng)} space greets you, the smell of ${pick(scents, rng)} hangs in the air, and among the clutter you notice ${pick(items, rng)} and ${props.length ? props.join(', ') : 'assorted possessions'}.`,
   `Within this ${pick(adjs, rng)} chamber, the aroma of ${pick(scents, rng)} lingers; ${pick(items, rng)} rests against the wall, surrounded by ${props.length ? props.join(', ') : 'miscellanea'}.`
 ];
-parts.push(pick(mediumTemplates, rng));
+const mediumTemplates2 = [
+  `This Room contains ${pick(adjs, rng)} ${pick(items, rng)} and ${props.length ? props.join(', ') : 'the whole room'} captivates you.`,
+  `You notice the underlining smell of ${pick(scents, rng)} lingering in the room.`,
+   ];       
+parts.push(pick(mediumTemplates1, rng));
+parts.push(pick(mediumTemplates2, rng));
+ if (npcs.length) parts.push(`You see ${npcs.join(', ')} here.`);
     } else if (complexity === 'medium'){
-      parts.push(`You find yourself in a ${pick(adjs,rng)} room; ${pick(scents,rng)} lingers in the air.`);
-      parts.push(`Light falls across ${pick(items,rng)} and ${props.length ? props.join(', ') + ' are present.' : 'the room holds little in the way of furniture.'}`);
-      if (activeTags.length) parts.push(`This area feels ${activeTags.join(', ')}.`);
-      if (npcs.length) parts.push(`You see ${npcs.join(', ')} here.`);
+      const longTemplates = [
+  `Crossing the threshold, you find yourself in a ${pick(adjs, rng)} and ${pick(adjs, rng)} room, its atmosphere thick with the scent of ${pick(scents, rng)} and a hint of ${pick(scents, rng)}. ${pick(items, rng)} occupies a prominent spot, while ${props.length ? props.join(', ') : 'numerous objects'} are scattered throughout. ${npcs.length ? 'You notice ' + npcs.join(', ') + ' present as well.' : 'The room feels deserted.'}`,
+  `The ${pick(adjs, rng)} space before you is filled with the unmistakable aroma of ${pick(scents, rng)} blending with ${pick(scents, rng)}. Light glints off ${pick(items, rng)}, and your gaze is drawn to ${props.length ? props.join(', ') : 'various oddities'} arranged across the room. ${npcs.length ? 'Nearby, ' + npcs.join(', ') + ' go about their business.' : 'No one else seems to be here.'}`,
+  `Stepping inside, you are greeted by a ${pick(adjs, rng)} chamber where ${pick(scents, rng)} lingers. ${pick(items, rng)} can be seen beside ${props.length ? props.join(', ') : 'some scattered items'}, and ${npcs.length ? npcs.join(', ') + ' are here, their presence adding to the atmosphere.' : 'the silence is almost total.'}`
+];
+parts.push(pick(longTemplates, rng));
     } else {
-      parts.push(`The chamber is ${pick(adjs,rng)} and stretches several paces. ${pick(scents,rng)} gives it a distinct character.`);
+const veryLongTemplates = [
+  `As you enter this ${pick(adjs, rng)}, ${pick(adjs, rng)} room, your senses are immediately engaged by the layered scents of ${pick(scents, rng)}, ${pick(scents, rng)}, and a trace of ${pick(scents, rng)}. In the dim light, ${pick(items, rng)} stands out among ${props.length ? props.join(', ') : 'a surprising collection of objects'}, all arranged in a seemingly haphazard fashion. The ${pick(adjs, rng)} walls are adorned with ${pick(items, rng)}, while ${props.length ? props.join(', ') : 'unusual artifacts'} fill alcoves and shelves. ${npcs.length ? 'You see ' + npcs.join(', ') + ' engaged in various activities, their movements casting shifting shadows.' : 'With no one else here, the silence is broken only by distant echoes.'} Every detail, from the lingering aroma to the scattered possessions, seems to tell a story, making this space feel both mysterious and alive.`,
+  `You find yourself in a ${pick(adjs, rng)} chamber, bathed in a ${pick(adjs, rng)} glow. The air is saturated with the scents of ${pick(scents, rng)}, ${pick(scents, rng)}, and ${pick(scents, rng)}. Your eyes are drawn to ${pick(items, rng)}, which lies among ${props.length ? props.join(', ') : 'varied belongings'} on the ancient floor. Along the walls, ${pick(items, rng)} and ${props.length ? props.join(', ') : 'other curiosities'} are arranged, while ${npcs.length ? npcs.join(', ') + ' converse in hushed tones nearby.' : 'the emptiness is almost palpable.'} Every corner holds signs of use, habitation, and history, and the interplay of light, scent, and presence gives the room a vibrant, immersive atmosphere.`,
+  `Stepping through the entryway, you are immersed in a world defined by ${pick(adjs, rng)} and ${pick(adjs, rng)} features. The air is thick with the intermingled aromas of ${pick(scents, rng)}, ${pick(scents, rng)}, and ${pick(scents, rng)}. Immediately, you notice ${pick(items, rng)} resting beside ${props.length ? props.join(', ') : 'an assortment of objects'}, while the ${pick(adjs, rng)} lighting reveals ${pick(items, rng)} displayed on shelves and alcoves. ${npcs.length ? npcs.join(', ') + ' move purposefully throughout the chamber, their presence adding to the room\'s dynamic energy.' : 'It is eerily still, with only your footsteps echoing.'} All around you, details clamor for attention—the placement of ${pick(items, rng)}, the scattering of ${props.length ? props.join(', ') : 'tools and trinkets'}, and the haunting mixture of scents—inviting you to explore further and uncover the secrets this space contains.`
+];
+parts.push(pick(veryLongTemplates, rng));
       parts.push(`Against one wall ${pick(items,rng)} rests${props.length ? ', accompanied by ' + props.slice(0,4).join(', ') : ''}.`);
       parts.push(`Small details suggest the room's purpose: ${activeTags.length ? activeTags.join(', ') + '.' : 'no obvious origin.'}`);
-      if (npcs.length) parts.push(`Present are ${npcs.map(n=>`${n}`).join(', ')} — they might have stories or demands.`);
-      if (rng.next() < 0.45) parts.push(`You notice a subtle clue: ${pick(items,rng)} bears ${pick(['a scratch','a faded mark','an unfamiliar sigil'],rng)}.`);
+      if (npcs.length) parts.push(`Present are ${npcs.map(n=>`${n}`).join(', ')} — they might be hostile or friendly.`);
+      if (rng.next() < 0.45) parts.push(`You find a ${pick(items,rng)} that bears ${pick(['a scratch','a faded mark','an unfamiliar sigil'],rng)}.`);
       parts.push(`An exit is ${pick(['a heavy door','a narrow passage','a low archway','a hidden slit'],rng)}; beyond it you sense ${pick(['a draft','a murmur','silence','a faint light'],rng)}.`);
     }
 
@@ -352,7 +365,7 @@ parts.push(pick(mediumTemplates, rng));
     const notesRaw = els.propInput.value || '';
     if (notesRaw && notesRaw.trim()){
       // add as an extra observation
-      parts.push(`Note: ${notesRaw.trim()}`);
+      parts.push(`Props Added: ${notesRaw.trim()}`);
     }
 
     const text = parts.join(' ');
