@@ -386,18 +386,86 @@
     // Verbose / long (multi-sentence descriptions)
     else {
       const veryLongTemplates = [
-        `As you enter this ${pick(adjs, rng)}, ${pick(adjs, rng)} room, your senses are immediately engaged by the layered scents of ${pick(scents, rng)}, ${pick(scents, rng)}, and a trace of ${pick(scents, rng)}. Shadows pool in the corners while a ${pick(items, rng)} occupies a place of prominence.`,
-        `You find yourself in a ${pick(adjs, rng)} chamber, bathed in a ${pick(adjs, rng)} glow. The air is saturated with the scents of ${pick(scents, rng)}, ${pick(scents, rng)}, and ${pick(scents, rng)}, and scattered ${pick(items_plural, rng)} suggest frequent use.`,
-        `Stepping through the entryway, you are immersed in a world defined by ${pick(adjs, rng)} and ${pick(adjs, rng)} features. The air is thick with the intermingled aromas of ${pick(scents, rng)}, ${pick(scents, rng)}, and something faintly sweet. Nearby, a ${pick(items, rng)} bears the marks of whatever occupation took place here.`
+  `As you enter this ${pick(adjs, rng)}, ${pick(adjs, rng)} room, your senses are immediately engaged by the layered scents of ${pick(scents, rng)}, ${pick(scents, rng)}, and a trace of ${pick(scents, rng)}. Shadows pool in the corners while a ${pick(items, rng)} occupies a place of prominence.`,
+  `You find yourself in a ${pick(adjs, rng)} chamber, bathed in a ${pick(adjs, rng)} glow. The air is saturated with the scents of ${pick(scents, rng)}, ${pick(scents, rng)}, and ${pick(scents, rng)}, and scattered ${pick(items_plural, rng)} suggest frequent use.`,
+  `Stepping through the entryway, you are immersed in a world defined by ${pick(adjs, rng)} and ${pick(adjs, rng)} features. The air is thick with the intermingled aromas of ${pick(scents, rng)}, ${pick(scents, rng)}, and something faintly sweet. Nearby, a ${pick(items, rng)} bears the marks of whatever occupation took place here.`,
+  `The moment you cross the threshold, you are enveloped by a ${pick(adjs, rng)}, ${pick(adjs, rng)} atmosphere that seems to cling to your skin. The mingled aromas of ${pick(scents, rng)}, ${pick(scents, rng)}, and lingering ${pick(scents, rng)} add a sensory richness to the scene. In the flickering light, a solitary ${pick(items, rng)} stands out among the ${pick(items_plural, rng)}, telling quiet stories of those who passed before you.`,
+  `Light from an unseen source glimmers off ${pick(items_plural, rng)} positioned along the walls, casting ${pick(adjs, rng)} and ${pick(adjs, rng)} patterns onto the floor. Every inhale brings the fragrance of ${pick(scents, rng)} mixed with subtle notes of ${pick(scents, rng)}. The stillness is punctuated only by the presence of a ${pick(items, rng)} near the center, surrounded by the detritus of lives lived in this space.`,
+  `It takes a moment for your eyes to adjust to the ${pick(adjs, rng)} surroundings. The unmistakable blend of ${pick(scents, rng)}, ${pick(scents, rng)}, and a hint of ${pick(scents, rng)} creates an evocative memory of distant places. You notice a cluster of ${pick(items_plural, rng)} arranged in a manner that suggests both order and chaos, with a single ${pick(items, rng)} maintaining silent vigil.`,
+  `The space you enter exudes a sense of ${pick(adjs, rng)} grandeur, unlike anything you have seen before. Hints of ${pick(scents, rng)} drift on the air, tinged with faint traces of ${pick(scents, rng)}. Your gaze is drawn immediately to a ${pick(items, rng)} that seems almost out of place among the ${pick(items_plural, rng)}, as if it were the relic of a different era or a forgotten ritual.`,
+  `As you survey the room, the interplay of ${pick(adjs, rng)} and ${pick(adjs, rng)} textures on the surfaces becomes apparent, accentuated by the smells of ${pick(scents, rng)} and ${pick(scents, rng)} wafting throughout. A ${pick(items, rng)} lies atop a pile of ${pick(items_plural, rng)}, and every step you take disturbs the dust, revealing traces of stories yet untold.`,
+  `You pause at the entrance, taking in the harmonious chaos created by ${pick(adjs, rng)} arrangements of ${pick(items_plural, rng)}, each carrying its own tale. There is a sense of history hanging in the air, woven from the threads of ${pick(scents, rng)}, ${pick(scents, rng)}, and the earthy aroma of ${pick(scents, rng)}. Centered in the tableau is a ${pick(items, rng)}, worn smooth by use.`,
+  `Walking through the chamber, you notice that time itself seems suspended. Every surface bears the mark of ${pick(adjs, rng)} care or neglect, and the combination of scents—${pick(scents, rng)}, ${pick(scents, rng)}, and a note of ${pick(scents, rng)}—evokes memories of festivals and farewells. Against one wall, a ${pick(items, rng)} stands alone while ${pick(items_plural, rng)} are arrayed as if for an unseen audience.`
+];
+       const VLongFollowUps = [
+  `A faint breeze stirs the air, carrying subtle hints of shifts just beyond your perception.`,
+  `Somewhere in the distance, ${pick(adjs, rng)} movement makes you wonder if you are truly alone.`,
+  `A lingering silence presses in, broken only by the sound of your own breathing.`,
+  `You catch a glimpse of your reflection in a ${pick(adjs, rng)} surface, distorted by the room’s ambient light.`,
+  `For a fleeting moment, you sense the eyes of unseen watchers upon you.`,
+  `Shadows creep along the walls, their patterns changing as if alive.`,
+  `A sudden chill prickles at your skin, hinting at some latent presence.`,
+  `You hear the faint echo of footsteps—perhaps your own, perhaps not.`,
+  `There’s an uneasy feeling that some detail here has changed since you first looked.`,
+  `A distant sound—a drip, a ${pick(adjs, rng)} clatter, an indistinct whisper—draws your attention.`,
+  `You pause, feeling like a choice awaits you in this uncanny space.`,
+  `The air grows heavier for just a breath, then lightens, leaving you unsettled.`,
+  `A flicker of movement at the edge of your vision disappears when you try to focus on it.`
+];
+        const longPropTemplates = [
+           `Near the doorway, ${pick(items, rng)} stands${props.length ? ', flanked by ' + props.slice(0,4).join(', ') : ''}.`,
+           `In the corner, ${pick(items, rng)} lies${props.length ? ', half-hidden among ' + props.slice(0,4).join(', ') : ''}.`,
+           `At the foot of a ${pick(adjs, rng)} wall, ${pick(items, rng)} waits${props.length ? ', nestled beside ' + props.slice(0,4).join(', ') : ''}.`, 
+           `Set against a shadowy nook, a ${pick(items, rng)} catches your eye${props.length ? ', with ' + props.slice(0,4).join(', ') + ' nearby' : ''}.`,
+           `By the window, you spot ${pick(items, rng)}${props.length ? ', together with ' + props.slice(0,4).join(', ') : ''}.`,
+           `Center stage, ${pick(items, rng)} commands attention${props.length ? ', attended by ' + props.slice(0,4).join(', ') : ''}.`,
+           `Next to a battered chair, ${pick(items, rng)} lingers${props.length ? ', surrounded by ' + props.slice(0,4).join(', ') : ''}.`,
+           `On a dusty shelf, ${pick(items, rng)} sits${props.length ? ', between ' + props.slice(0,4).join(', ') : ''}.`,
+           `Leaning against a pillar, ${pick(items, rng)} rests${props.length ? ', along with ' + props.slice(0,4).join(', ') : ''}.`,
+           `Against one wall ${pick(items, rng)} rests${props.length ? ', accompanied by ' + props.slice(0,4).join(', ') : ''}.`
+           
+           ];
+       const longNPCTemplates = [
+          `Present are ${npcs.map(n => `${n}`).join(', ')}, their presence filling the room with tension.`,
+          `Lurking nearby, ${npcs.map(n => `${n}`).join(', ')} watch with ${pick(['predatory intent', 'silent curiosity', 'barely hidden hostility', 'measured caution'], rng)}.`,
+          `The chamber is occupied by ${npcs.map(n => `${n}`).join(', ')}, ${pick(['each exuding an air of danger', 'all sizing you up', 'their movements eerily quiet', 'their eyes glinting in the half-light'], rng)}.`,
+          `Sharing this uneasy space are ${npcs.map(n => `${n}`).join(', ')}, ${pick(['monstrous and menacing', 'stranger and friend alike', 'their features twisted or inscrutable', 'all with agendas unknown'], rng)}.`,
+          `Amidst the gloom stand ${npcs.map(n => `${n}`).join(', ')}, ${pick(['their claws poised', 'weapons at the ready', 'bodies tense', 'antennae twitching', 'a low growl resonating'], rng)}.`,
+          `Standing guard, ${npcs.map(n => `${n}`).join(', ')} assess your arrival with ${pick(['hungry eyes', 'resentment', 'fearless challenge', 'cold amusement'], rng)}.`,
+          `Around you, ${npcs.map(n => `${n}`).join(', ')} ${pick(['stalk in circles', 'shift uneasily', 'snarl softly', 'keep to the shadows'], rng)}, never breaking their focus on you.`,
+          `Looming figures—${npcs.map(n => `${n}`).join(', ')}—dot the room, ${pick(['each a potential threat', 'each watching every move', 'each withholding their intent'], rng)}.`,
+          `Your attention is drawn to ${npcs.map(n => `${n}`).join(', ')}, ${pick(['creatures of myth and menace', 'wary survivors', 'furtive observers', 'rare visitors in such a place'], rng)}.`,
+          `Moving between the scattered belongings, ${npcs.map(n => `${n}`).join(', ')} add an air of ${pick(['unease', 'mystery', 'danger', 'expectation'], rng)} to the surroundings.`
+          
+                     ];
+             const VitemTemplates1 = [
+      `You uncover a ${pick(items, rng)} marked with ${pick(['ancient runes', 'a deep gouge', 'traces of wax', 'strange stains'], rng)}.`,
+`Nestled among the debris is a ${pick(items, rng)} etched with ${pick(['cryptic lines', 'rushed writing', 'burn marks', 'unreadable symbols'], rng)}.`,
+`You spot a ${pick(items, rng)} covered in ${pick(['layers of dust', 'an oily residue', 'mysterious numbers', 'faded paint'], rng)}.`,
+`A ${pick(items, rng)} lies here, showing signs of ${pick(['recent use', 'long neglect', 'rough handling', 'careful repair'], rng)}.`,
+`Hidden in the shadows, a ${pick(items, rng)} displays ${pick(['a strange emblem', 'numerous scratches', 'cracked edges', 'splashes of dried liquid'], rng)}.`,
+`Propped against the wall, a ${pick(items, rng)} is adorned with ${pick(['a bronze plaque', 'arcane sigils', 'old bloodstains', 'tiny holes'], rng)}.`,
+`You come across a ${pick(items, rng)} that carries ${pick(['an unfamiliar scent', 'the remains of melted wax', 'an inscription in a dead language', 'patches of mold'], rng)}.`,
+`Half-buried, a ${pick(items, rng)} shows ${pick(['the remnants of paint', 'ragged tears', 'a stitched patch', 'scorched edges'], rng)}.`,
+`A ${pick(items, rng)} has been left here, displaying ${pick(['claw marks', 'delicate carvings', 'chunks missing', 'a faint glimmer'], rng)}.`,
+`Sitting atop a pile, a ${pick(items, rng)} is decorated with ${pick(['gleaming studs', 'fingerprints', 'mossy growth', 'hastily carved initials'], rng)}.`
+                
       ];
       parts.push(pick(veryLongTemplates, rng));
-      parts.push(`Against one wall ${pick(items, rng)} rests${props.length ? ', accompanied by ' + props.slice(0,4).join(', ') : ''}.`);
-      parts.push(`Small details suggest the room's purpose: ${activeTags.length ? activeTags.join(', ') + '.' : 'no obvious origin.'}`);
-      if (npcs.length) parts.push(`Present are ${npcs.map(n=>`${n}`).join(', ')} — they might be hostile or friendly.`);
-      if (rng.next() < 0.45) parts.push(`You find a ${pick(items, rng)} that bears ${pick(['a scratch','a faded mark','an unfamiliar sigil','a smear of ink'], rng)}.`);
+      parts.push(pick(VLongFollowUps, rng)); 
+      parts.push(pick(longPropTemplates, rng)); 
+      if (npcs.length) parts.push(pick(longNPCTemplates, rng)); 
+      if (rng.next() < 0.45) parts.push(pick(VitemTemplates1, rng)); 
       const VlongTemplates1 = [
         `An exit is ${pick(['a heavy door','a narrow passage','a low archway','a hidden slit'], rng)}; beyond it you sense ${pick(['a draft','a murmur','silence','a faint light'], rng)}.`,
-        `You notice the subtle smell of ${pick(scents, rng)} lingering in the room, as if something recent disturbed the dust.`
+         `A ${pick(['stone archway', 'creaking door', 'fabric curtain', 'twisting tunnel'], rng)} leads onward; from it emanates ${pick(['the scent of earth', 'a distant echo', 'the cold air of night', 'golden lamplight'], rng)}.`,
+         `To one side, ${pick(['rusted bars', 'a battered hatch', 'a chipped doorway', 'a secret door'], rng)} offers egress; hints of ${pick(['moisture', 'hushed whispers', 'ominous quiet', 'filtered sunlight'], rng)} drift through.`,
+         `At the far end, ${pick(['a warped doorframe', 'a subtle seam in the wall', 'a squat opening', 'steps descending'], rng)} promises escape; you catch ${pick(['the faint sound of water', 'a sharp chill', 'soft footsteps', 'nothing at all'], rng)} beyond.`,
+         `Hidden from easy view is ${pick(['a sliding panel', 'a heavy curtain', 'a jagged rift', 'a cleverly disguised trapdoor'], rng)}; beyond it lingers ${pick(['darkness', 'the hum of voices', 'moving air', 'a flicker of torchlight'], rng)}.`,
+         `Set into the wall, ${pick(['a barred gate', 'an ornate portal', 'a rotting plank door', 'an uneven threshold'], rng)} beckons; on the other side, there is ${pick(['the promise of freedom', 'a weighty silence', 'shifting light', 'the smell of something burning'], rng)}.`,
+         `A passage — ${pick(['overgrown with moss', 'barely wide enough to squeeze through', 'scarred by claw marks', 'adorned with runes'], rng)} — offers a way out; from it comes ${pick(['an animal’s growl', 'fresh air', 'utter quiet', 'soft luminescence'], rng)}.`,
+         `There’s an exit: ${pick(['low-ceilinged and narrow', 'curtained with cobwebs', 'carved in careful symmetry', 'appearing recently used'], rng)}; whatever lies beyond is accompanied by ${pick(['a metallic tang', 'the rustle of fabric', 'barred shadows', 'an enticing aroma'], rng)}.`
+         
       ];
       parts.push(pick(VlongTemplates1, rng));
     }
