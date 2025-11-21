@@ -365,7 +365,21 @@
         `As you move forward, the ${pick(adjs, rng)} space envelopes you, layered with complex scents of ${pick(scents, rng)} and ${pick(scents, rng)}. Glancing around, you spot a ${pick(items, rng)} sitting amidst a few ${pick(items_plural, rng)}, and ${props.length ? props.join(', ') : 'an assortment of small objects'} catches the shifting light from above.`,
         `Entering the room, an atmosphere both ${pick(adjs, rng)} and ${pick(adjs, rng)} draws your focus to a ${pick(items, rng)} on an old shelf, its presence surrounded by traces of ${pick(scents, rng)} and ${pick(scents, rng)}. Scattered around are several ${pick(items_plural, rng)}, each seemingly paired with ${props.length ? props.join(', ') : 'other remnants of past visitors'}.`
       ];
+       const longFollowUps = [
+   `A faint sound echoes, prompting you to wonder if ${pick(items, rng)} or perhaps ${pick(items_plural, rng)} are the source.`,
+  `A closer look at ${props.length ? props.join(', ') : 'the curious objects'} reveals intricate patterns intertwined with ${pick(adjs, rng)} hues.`,
+  `The way ${pick(items_plural, rng)} are scattered hints at recent activity—was someone searching for the elusive ${pick(items, rng)}?`,
+  `Shadows shift across ${props.length ? props.join(', ') : 'the room'}, their movement subtly altering the ${pick(adjs, rng)} ambiance.`,
+  `You get the sense that the lingering ${pick(scents, rng)} mask something more mysterious lurking beneath the surface.`,
+  `Touching one of the ${pick(items_plural, rng)}, you feel an unexpected warmth—were they just left here by someone?`,
+  `Suddenly, ${pick(items, rng)} topples over, drawing your attention to a hidden passage behind ${props.length ? props.join(', ') : 'a pile of ${pick(items_plural, rng)}'}.`,
+  `The ${pick(scents, rng)} grows stronger as you approach ${props.length ? props.join(', ') : 'the center of the space'}, wrapping you in an almost tangible embrace.`,
+  `As you listen closely, the gentle hum of unseen energy seems to radiate from a ${pick(items, rng)} and its ${pick(adjs, rng)} companions.`,
+  `Instinct urges you to search among the ${pick(items_plural, rng)}, as if something valuable—perhaps the fabled ${pick(items, rng)}—is waiting to be discovered.`
+];
       parts.push(pick(longTemplates, rng));
+      parts.push(pick(longFollowUps, rng));
+
       if (npcs.length) parts.push(`Present: ${npcs.join(', ')}.`);
     }
 
