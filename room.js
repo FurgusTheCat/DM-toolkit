@@ -357,7 +357,7 @@
       const longTemplates = [
         `Crossing the threshold, you find yourself in a ${pick(adjs, rng)} and ${pick(adjs, rng)} room, its atmosphere thick with the scent of ${pick(scents, rng)} and a hint of ${pick(scents, rng)}. A ${pick(items, rng)} rests nearby, and small ${pick(items_plural, rng)} litter the floor.`,
         `The ${pick(adjs, rng)} space before you is filled with the unmistakable aroma of ${pick(scents, rng)} blending with ${pick(scents, rng)}. Light glints off ${pick(items, rng)}, and your gaze is drawn to ${props.length ? props.join(', ') : 'a curious arrangement of objects'}.`,
-        `Stepping inside, you are greeted by a ${pick(adjs, rng)} chamber where ${pick(scents, rng)} lingers. ${pick(items_plural, rng)} can be seen beside ${props.length ? props.join(', ') : 'some scattered belongings'}, and the overall effect is ${pick(adjs, rng)}.`
+        `Stepping inside, you are greeted by a ${pick(adjs, rng)} chamber where ${pick(scents, rng)} lingers. ${pick(items_plural, rng)} can be seen beside ${props.length ? props.join(', ') : 'some scattered belongings'}, and the overall effect is ${pick(adjs, rng)}.`,
         `A sense of calm descends as you enter this ${pick(adjs, rng)} room. The walls are adorned with patterns that evoke memories of ${pick(scents, rng)} and ${pick(scents, rng)}. On a small table rests a ${pick(items, rng)}, while ${pick(items_plural, rng)} are thoughtfully arranged around ${props.length ? props.join(', ') : 'a central feature you can’t quite identify'}.`,
         `Upon entering, your senses are assaulted by the mingling scents of ${pick(scents, rng)}, ${pick(scents, rng)}, and something unidentifiable wafting from a ${pick(items, rng)} in the corner. The ${pick(adjs, rng)} decor is enhanced by ${props.length ? props.join(', ') : 'unexpected artistic touches'}, while several ${pick(items_plural, rng)} seem almost deliberately placed to catch your attention.`,
         `You step carefully into a ${pick(adjs, rng)} and ${pick(adjs, rng)} room, where the air is thick with ${pick(scents, rng)} and ${pick(scents, rng)}. Off to one side sits a ${pick(items, rng)}, partially covered by ${pick(items_plural, rng)}, as if someone left in haste. The presence of ${props.length ? props.join(', ') : 'peculiar items'} adds to the room’s intrigue.`,
@@ -366,7 +366,7 @@
         `Entering the room, an atmosphere both ${pick(adjs, rng)} and ${pick(adjs, rng)} draws your focus to a ${pick(items, rng)} on an old shelf, its presence surrounded by traces of ${pick(scents, rng)} and ${pick(scents, rng)}. Scattered around are several ${pick(items_plural, rng)}, each seemingly paired with ${props.length ? props.join(', ') : 'other remnants of past visitors'}.`
       ];
        const longFollowUps = [
-   `A faint sound echoes, prompting you to wonder if ${pick(items, rng)} or perhaps ${pick(items_plural, rng)} are the source.`,
+  `A faint sound echoes, prompting you to wonder if ${pick(items, rng)} or perhaps ${pick(items_plural, rng)} are the source.`,
   `A closer look at ${props.length ? props.join(', ') : 'the curious objects'} reveals intricate patterns intertwined with ${pick(adjs, rng)} hues.`,
   `The way ${pick(items_plural, rng)} are scattered hints at recent activity—was someone searching for the elusive ${pick(items, rng)}?`,
   `Shadows shift across ${props.length ? props.join(', ') : 'the room'}, their movement subtly altering the ${pick(adjs, rng)} ambiance.`,
