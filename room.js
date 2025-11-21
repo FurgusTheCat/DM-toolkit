@@ -369,7 +369,7 @@ const tags = [
 const mediumTemplates1 = [
   `You step into a ${pick(adjs, rng)} room where the scent of ${pick(scents, rng)} mingles with ${pick(scents, rng)}; A ${pick(items, rng)} lies nearby, and ${props.length ? props.join(', ') : 'various items'} catch your eye.`,
   `A ${pick(adjs, rng)} and ${pick(adjs, rng)} space greets you, the smell of ${pick(scents, rng)} hangs in the air, and among the clutter you notice a few ${pick(items_plural, rng)} and ${props.length ? props.join(', ') : 'assorted possessions'}.`,
-  `Within this ${pick(adjs, rng)} chamber, the aroma of ${pick(scents, rng)} lingers; A ${pick(items, rng)} rests against the wall, surrounded by ${props.length ? props.join(', ') : pick(items_plural, rng)}}.`,
+  `Within this ${pick(adjs, rng)} chamber, the aroma of ${pick(scents, rng)} lingers; A ${pick(items, rng)} rests against the wall, surrounded by ${props.length ? props.join(', ') : pick(items_plural, rng)}.`,
   `A sense of ${pick(adjs, rng)} pervades the area, interlaced with whiffs of ${pick(scents, rng)} and ${pick(scents, rng)}; on a ${pick(items, rng)}, ${props.length ? props.join(', ') : 'an interesting collection'} can be found.`,
   `This ${pick(adjs, rng)} locale is redolent with ${pick(scents, rng)}, and a scattering of ${pick(items_plural, rng)} is visible alongside ${props.length ? props.join(', ') : 'traces of recent activity'}.`,
   `There’s a ${pick(adjs, rng)} air here, thick with the scent of ${pick(scents, rng)}; resting in the corner, a ${pick(items, rng)} sits among several ${props.length ? props.join(', ') : pick(items_plural, rng)}.`,
@@ -398,7 +398,7 @@ parts.push(pick(mediumTemplates2, rng));
  if (npcs.length) parts.push(`You see ${npcs.join(', ')} here.`);
     } else if (complexity === 'medium'){
       const longTemplates = [
-  `Crossing the threshold, you find yourself in a ${pick(adjs, rng)} and ${pick(adjs, rng)} room, its atmosphere thick with the scent of ${pick(scents, rng)} and a hint of ${pick(scents, rng)}. A ${pick(items, rng)} occupies a prominent spot, while ${props.length ? props.join(', ') : pick(items_plural, rng)} are scattered throughout. ${npcs.length ? 'You notice ' + npcs.join(', ') + ' present as well.' : 'The room feels deserted.'}`,
+  `Crossing the threshold, you find yourself in a ${pick(adjs, rng)} and ${pick(adjs, rng)} room, its atmosphere thick with the scent of ${pick(scents, rng)} and a hint of ${pick(scents, rng)}. A ${pick(items, rng)} occupies a prominent spot, while ${props.length ? props.join(', ') : 'curious objects'. ${npcs.length ? 'You notice ' + npcs.join(', ') + ' present as well.' : 'The room feels deserted.'}`,
   `The ${pick(adjs, rng)} space before you is filled with the unmistakable aroma of ${pick(scents, rng)} blending with ${pick(scents, rng)}. Light glints off ${pick(items, rng)}, and your gaze is drawn to ${props.length ? props.join(', ') : 'various oddities'} arranged across the room. ${npcs.length ? 'Nearby, ' + npcs.join(', ') + ' go about their business.' : 'No one else seems to be here.'}`,
   `Stepping inside, you are greeted by a ${pick(adjs, rng)} chamber where ${pick(scents, rng)} lingers. ${pick(items, rng)} can be seen beside ${props.length ? props.join(', ') : 'some scattered items'}, and ${npcs.length ? npcs.join(', ') + ' are here, their presence adding to the atmosphere.' : 'the silence is almost total.'}`
 ];
