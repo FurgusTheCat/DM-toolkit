@@ -35,8 +35,8 @@
     tavern: {
       adjs: ['smoky','rowdy','stained','crowded','raucous','sticky','dim','bustling','greasy','boisterous','fire-lit','ale-soaked','cheerful','lantern-lit'],
       scent: ['ale','stew','pipe smoke','spilled wine','sweat','roasting meat','wood smoke','bread','burnt onions','yeast','cider'],
-      items: ['barrel','broken mug','stool','tankard','fireplace','table','bench','card deck','spilled dice','serving tray','chalkboard','dartboard','half-eaten loaf','apron'],
-      items_plural: ['barrels','broken mugs','stools','tankards','fireplaces','tables','benches','card decks','spilled dice','serving trays','chalkboards','dartboards','loaves','aprons']
+      items: ['barrel','broken mug','stool','tankard','fireplace','table','bench','a card deck','spilled dice','serving tray','chalkboard','dartboard','half-eaten loaf','apron'],
+      items_plural: ['barrels','broken mugs','stools','tankards','fireplaces','tables','benches','cards','spilled dice','serving trays','chalkboards','dartboards','loaves','aprons']
     },
     temple: {
       adjs: ['hallowed','serene','dusty','quiet','sacred','vaulted','echoing','marble','golden','solemn','ancient','candlelit','sun-dappled','ornate','incense-wreathed'],
