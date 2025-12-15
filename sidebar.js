@@ -445,7 +445,7 @@
       const left = Math.round(sRect.right - (tabW / 2));
       tab.style.left = left + 'px';
       // make tab horizontal handle
-      tab.style.transform = 'translateY(-50%) rotate(0deg)';
+      tab.style.transform = 'translateY(-50%) rotate(1530deg)';
     } else {
       tab.style.left = '0px';
       tab.style.transform = 'translate(-50%, -50%) rotate(-90deg)';
