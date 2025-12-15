@@ -1,16 +1,16 @@
-// sidebar.js - self-contained, injects CSS, creates a little side-tab and toggles #sidebar
+// sidebar.js - side tab that moves with the sidebar and attaches to its edge
 (function () {
   const SIDEBAR_ID = 'sidebar';
   const TAB_ID = 'sidebarTab';
   const STORAGE_KEY = 'dmtoolkit.sidebar.open';
   const CSS_ID = 'dmtoolkit-sidebar-styles';
 
-  // Inject CSS once
+  // Inject minimal CSS (if not already injected)
   if (!document.getElementById(CSS_ID)) {
-    const css = document.createElement('style');
-    css.id = CSS_ID;
-    css.textContent = `
-/* dmtoolkit sidebar minimal styles (injected by sidebar.js) */
+    const style = document.createElement('style');
+    style.id = CSS_ID;
+    style.textContent = `
+/* dmtoolkit sidebar styles injected by sidebar.js */
 .dm-sidebar {
   position: fixed;
   left: 0;
@@ -30,7 +30,8 @@
 }
 .dm-sidebar.dm-open { transform: translateX(0); }
 
-/* side tab */
+/* the tab is positioned fixed so we can control it precisely;
+   script will move it to the edge of the sidebar when open */
 #${TAB_ID} {
   position: fixed;
   left: 0;
@@ -48,37 +49,31 @@
   font-weight: 700;
   font-size: 0.95rem;
   line-height: 1;
+  transition: left .18s ease, transform .18s ease;
 }
-#${TAB_ID}:focus{ outline: 3px solid rgba(255,255,255,0.12); outline-offset: 3px; }
+#${TAB_ID}:focus { outline: 3px solid rgba(255,255,255,0.12); outline-offset: 3px; }
 
-/* small icon fallback if you want smaller display on mobile */
-@media (max-width: 520px) {
-  #${TAB_ID} {
-    font-size: 0.86rem;
-    padding: 6px 10px;
-  }
+/* smaller on very small screens */
+@media (max-width:520px) {
+  #${TAB_ID} { font-size: 0.86rem; padding: 6px 10px; }
   .dm-sidebar { width: 86vw; }
 }
-
-/* keep existing pages unchanged: the sidebar overlays rather than pushes */
 `;
-    document.head.appendChild(css);
+    document.head.appendChild(style);
   }
 
-  // Locate or create the aside element
+  // Get or create sidebar
   let sidebar = document.getElementById(SIDEBAR_ID);
   if (!sidebar) {
     sidebar = document.createElement('aside');
     sidebar.id = SIDEBAR_ID;
-    // create it as first child so it doesn't break document flow
+    sidebar.setAttribute('aria-hidden', 'true');
     document.body.insertBefore(sidebar, document.body.firstChild);
   }
-
-  // Make sure the aside has our helper class and is focusable
   sidebar.classList.add('dm-sidebar');
   if (!sidebar.hasAttribute('tabindex')) sidebar.setAttribute('tabindex', '-1');
 
-  // Create the tab if missing
+  // Get or create tab
   let tab = document.getElementById(TAB_ID);
   if (!tab) {
     tab = document.createElement('button');
@@ -87,93 +82,145 @@
     tab.title = 'Open tools (Ctrl/Cmd+B)';
     tab.setAttribute('aria-controls', SIDEBAR_ID);
     tab.setAttribute('aria-expanded', 'false');
-    // Tab label (hamburger). Change to text if you prefer.
     tab.textContent = '☰';
-    // Append to body so it's always visible
     document.body.appendChild(tab);
   }
 
-  // Read saved state: '1' for open, otherwise closed
-  let saved = null;
-  try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) { /* ignore storage errors */ }
-  const wasOpen = saved === '1' || sidebar.getAttribute('aria-hidden') === 'false';
+  // Utility to safely read/write storage
+  function storageGet(key) {
+    try { return localStorage.getItem(key); } catch (e) { return null; }
+  }
+  function storageSet(key, val) {
+    try { localStorage.setItem(key, val); } catch (e) { /* ignore */ }
+  }
 
-  // Apply open/closed state
+  // initial open state: stored preference > aria-hidden attr (false means open)
+  const saved = storageGet(STORAGE_KEY);
+  const initialOpen = saved === '1' || sidebar.getAttribute('aria-hidden') === 'false';
+
+  // Apply open/closed state and update tab position
   function apply(open) {
     sidebar.classList.toggle('dm-open', Boolean(open));
     sidebar.setAttribute('aria-hidden', String(!open));
     tab.setAttribute('aria-expanded', String(open));
     tab.setAttribute('aria-pressed', String(open));
-    // focus management for accessibility
+
+    // Focus management
     if (open) {
-      // focus first focusable element inside sidebar if present, otherwise the sidebar
-      const focusable = sidebar.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      const focusable = sidebar.querySelector(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
       (focusable || sidebar).focus && (focusable || sidebar).focus();
     } else {
-      // return focus to tab
       try { tab.focus(); } catch (e) { /* ignore */ }
     }
+
+    // Update tab position (use RAF for smoother positioning after transitions)
+    requestAnimationFrame(updateTabPosition);
   }
 
   function setOpen(open) {
     apply(open);
-    try { localStorage.setItem(STORAGE_KEY, open ? '1' : '0'); } catch (e) { /* ignore */ }
+    storageSet(STORAGE_KEY, open ? '1' : '0');
   }
 
-  // initialize
-  apply(Boolean(wasOpen));
+  // Update tab position so it sits on the sidebar outer edge when sidebar is open
+  function updateTabPosition() {
+    // Ensure the tab is fixed and vertically centered by default
+    tab.style.top = '50%';
+    tab.style.transformOrigin = 'center';
+    tab.style.transition = 'left .18s ease, transform .18s ease';
 
-  // Toggle handlers
+    const tabRect = tab.getBoundingClientRect();
+    const tabW = Math.max(tabRect.width, 36); // fallback width
+    const tabH = tabRect.height || 36;
+
+    if (sidebar.classList.contains('dm-open')) {
+      // Sidebar visible; place tab at the sidebar's right outer edge (attached)
+      const sRect = sidebar.getBoundingClientRect();
+      // put the tab so its middle aligns with the sidebar right edge (outside the sidebar)
+      // left value = sRect.right - (tabW/2)
+      const left = Math.round(sRect.right - (tabW / 2));
+      tab.style.left = left + 'px';
+      // keep tab vertically centered; remove rotation (make horizontal if you prefer)
+      tab.style.transform = 'translateY(-50%) rotate(0deg)';
+    } else {
+      // Sidebar closed; place tab at the viewport left edge, rotated
+      tab.style.left = '0px';
+      tab.style.transform = 'translate(-50%, -50%) rotate(-90deg)';
+    }
+  }
+
+  // Debounce helper
+  let debounceTimer = null;
+  function scheduleUpdate() {
+    if (debounceTimer) clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      debounceTimer = null;
+      updateTabPosition();
+    }, 80);
+  }
+
+  // Initialize
+  apply(Boolean(initialOpen));
+
+  // Toggle on tab click
   tab.addEventListener('click', (ev) => {
     ev.stopPropagation();
     setOpen(!sidebar.classList.contains('dm-open'));
   });
 
+  // Keyboard accessibility for tab (Enter/Space)
   tab.addEventListener('keydown', (ev) => {
-    // Enter or Space toggles
     if (ev.key === 'Enter' || ev.key === ' ' || ev.key === 'Spacebar') {
       ev.preventDefault();
       setOpen(!sidebar.classList.contains('dm-open'));
     }
   });
 
-  // Global keyboard shortcuts
+  // Global keyboard shortcuts: Ctrl/Cmd+B toggle, Esc close
   window.addEventListener('keydown', (ev) => {
     const key = ev.key ? ev.key.toLowerCase() : '';
     const isMac = navigator.platform.toUpperCase().includes('MAC');
     const mod = isMac ? ev.metaKey : ev.ctrlKey;
-
-    // Ctrl/Cmd+B toggles
     if (mod && key === 'b') {
       ev.preventDefault();
       setOpen(!sidebar.classList.contains('dm-open'));
       return;
     }
-
-    // Escape closes
     if (key === 'escape' && sidebar.classList.contains('dm-open')) {
       setOpen(false);
     }
   });
 
-  // Click outside closes (ignore clicks on the tab)
+  // Click outside closes sidebar
   document.addEventListener('click', (ev) => {
     if (!sidebar.classList.contains('dm-open')) return;
-    const target = ev.target;
-    if (sidebar.contains(target) || tab.contains(target)) return;
+    const t = ev.target;
+    if (sidebar.contains(t) || tab.contains(t)) return;
     setOpen(false);
   });
 
-  // Expose a tiny API for debugging / manual control
+  // Update tab position on resize and scroll
+  window.addEventListener('resize', scheduleUpdate);
+  window.addEventListener('scroll', scheduleUpdate, { passive: true });
+
+  // Also schedule update after transition end (sidebar opening)
+  sidebar.addEventListener('transitionend', scheduleUpdate);
+
+  // Expose small API
   try {
     sidebar.dmSidebar = {
       open: () => setOpen(true),
       close: () => setOpen(false),
       toggle: () => setOpen(!sidebar.classList.contains('dm-open')),
       isOpen: () => sidebar.classList.contains('dm-open'),
+      updateTabPosition
     };
   } catch (e) { /* ignore */ }
 
-  // console hint
-  console.info('dmtoolkit sidebar loaded — toggle with the side tab, Esc, or Ctrl/Cmd+B. Use sidebar.dmSidebar in console to control.');
+  // ensure position is correct after load
+  window.addEventListener('load', () => requestAnimationFrame(updateTabPosition));
+
+  console.info('sidebar.js loaded — side-tab will move with the sidebar; toggle with the tab, Esc, or Ctrl/Cmd+B.');
 })();
