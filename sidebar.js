@@ -36,7 +36,7 @@
   position: fixed;
   left: 0;
   top: 50%;
-  transform: translate(-50%, -50%) rotate(-90deg);
+  transform: translate(-50%, -50%) rotate(360deg);
   transform-origin: center;
   background: var(--accent, #ffd166);
   color: var(--sidebar-tab-fore, #002);
