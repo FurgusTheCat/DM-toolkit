@@ -1,6 +1,6 @@
 // sidebar.js - minimal behaviour for the existing <aside id="sidebar"> element.
 // - Adds a small toggle button inside the sidebar (if missing)
-// - Toggles an "open" class on the aside
+// - Toggles an "open" class on the aside so the included inline CSS can show/hide it
 // - Persists open/closed in localStorage
 // - Adds Ctrl/Cmd+B keyboard shortcut to toggle
 (function () {
