@@ -143,7 +143,7 @@
       const left = Math.round(sRect.right - (tabW / 2));
       tab.style.left = left + 'px';
       // keep tab vertically centered; remove rotation (make horizontal if you prefer)
-      tab.style.transform = 'translateY(-50%) rotate(0deg)';
+      tab.style.transform = 'translateY(-50%) rotate(450deg)';
     } else {
       // Sidebar closed; place tab at the viewport left edge, rotated
       tab.style.left = '0px';
