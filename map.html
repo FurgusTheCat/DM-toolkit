@@ -30,7 +30,6 @@
   </style>
 </head>
 <body>
-  <aside id="sidebar" aria-hidden="true"></aside>
   <nav><a class="back" href="index.html">&larr; Back</a></nav>
 
   <main>
@@ -39,14 +38,69 @@
 
       <div class="row control-grid">
         <label>Width (tiles): <input id="mapWidth" type="number" min="24" max="160" value="64"></label>
-<!-- rest of map.html content unchanged -->
+        <label>Height (tiles): <input id="mapHeight" type="number" min="24" max="120" value="48"></label>
+      </div>
+
+      <div class="row control-grid">
+        <label>Tile Size (px): <input id="tileSize" type="number" min="6" max="32" value="12"></label>
+        <label>Rooms: <input id="roomCount" type="number" min="3" max="120" value="14"></label>
+      </div>
+
+      <div class="row control-grid">
+        <label>Min Room Size: <input id="minRoom" type="number" min="3" max="20" value="4"></label>
+        <label>Max Room Size: <input id="maxRoom" type="number" min="4" max="30" value="12"></label>
+      </div>
+
+      <div class="row">
+        <label>Layout style:
+          <select id="hallwayStyle">
+            <option value="manmade" selected>Man-Made</option>
+            <option value="cave">Cave-Layout</option>
+          </select>
+        </label>
+        <label><input id="mainRoom" type="checkbox"> Include main room (boss)</label>
+      </div>
+
+      <div class="row">
+        <button id="genMap">Generate Map</button>
+        <button id="clearMap">Clear</button>
+        <button id="exportMap">Export JSON</button>
+      </div>
+
+      <h3>Edit Mode</h3>
+      <div class="row">
+        <button class="mode-btn" id="modePan">Pan</button>
+      </div>
+
     </section>
 
     <section class="canvas-area">
-      <!-- original map canvas and controls go here -->
+      <div class="map-wrap" id="mapWrap" style="width:100%;min-width:480px;min-height:360px;">
+        <canvas id="mapCanvas" tabindex="0" title="Dungeon map (click tiles to edit/select)"></canvas>
+        <div class="zoom-controls-overlay" id="zoomOverlay">
+          <button id="zoomIn" title="Zoom in">＋</button>
+          <button id="zoomOut" title="Zoom out">－</button>
+          <button id="resetZoom" title="Reset zoom">◻</button>
+        </div>
+        <div id="propTooltip"></div>
+      </div>
+
+      <aside style="width:360px;display:flex;flex-direction:column;gap:12px">
+        <div class="panel">
+          <h3>Selection</h3>
+          <pre id="selInfo">No selection</pre>
+        </div>
+
+
+        <div class="panel">
+          <h3>Updates</h3>
+          <div class="small">Working on fixing bugs</div>
+        </div>
+      </aside>
     </section>
   </main>
 
-  <script src="sidebar.js"></script>
+  <script src="shared.js"></script>
+  <script src="map.js"></script>
 </body>
 </html>
