@@ -44,7 +44,7 @@ header p{margin:4px 0 0;color:var(--muted);font-size:0.95rem}
   padding:20px;
 }
 
-.2-grid{
+.two-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
   gap:16px;
