@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Map Editor — DM Toolkit</title>
+  <link rel="stylesheet" href="map-editor.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Map Editor</h1>
+  </header>
+
+  <div class="main">
+    <section class="canvas-column">
+      <div class="toolbar">
+        <button id="zoomIn" title="Zoom in">＋</button>
+        <button id="zoomOut" title="Zoom out">－</button>
+        <button id="resetZoom" title="Reset zoom">◻</button>
+      </div>
+
+      <!-- VIEWPORT (fixed visible area) -->
+      <div class="canvas-viewport" id="canvasViewport">
+        <!-- CONTENT (scaled) -->
+        <div class="canvas-content" id="canvasContent">
+          <div class="canvas-wrap" id="canvasWrap" tabindex="0">
+            <canvas id="mapCanvas" aria-label="Map canvas"></canvas>
+            <div id="propLayer" class="prop-layer" aria-hidden="false"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div id="hint" class="hint">Tip: Props → click to place. Select → transform. Shift+rotate snaps 15°.</div>
+        <div class="spacer"></div>
+        <div id="status" class="hint"></div>
+      </div>
+    </section>
+
+    <aside id="sidebar" class="sidebar" aria-expanded="true">
+      <div class="side-tabs" id="sideTabs">
+        <button class="side-tab active" data-tab="tools" title="Tools">Tools</button>
+        <button class="side-tab" data-tab="props" title="Props">Props</button>
+        <button class="side-tab small" id="toggleSidebar" title="Toggle sidebar">☰</button>
+      </div>
+
+      <div id="tab-tools" class="panel">
+        <h3>Tools</h3>
+
+        <div class="row">
+          <label>Width: <input id="cols" type="number" min="4" max="300" value="64"></label>
+          <label>Height: <input id="rows" type="number" min="4" max="300" value="48"></label>
+        </div>
+
+        <div class="row">
+          <label>Tile (px): <input id="tileSize" type="number" min="4" max="64" value="12"></label>
+          <button id="applyGrid">Apply</button>
+          <button id="clearGrid">Clear</button>
+        </div>
+
+        <div class="row">
+          <label>Tool:
+            <select id="tool">
+              <option value="brush">Brush</option>
+              <option value="erase">Erase</option>
+              <option value="fill">Fill</option>
+              <option value="wall">Wall</option>
+              <option value="door">Door</option>
+              <option value="select">Select/Props</option>
+            </select>
+          </label>
+          <label>Color: <input id="color" type="color" value="#8fd3a6" /></label>
+        </div>
+
+        <div class="row">
+          <button id="undo" disabled>Undo</button>
+          <button id="redo" disabled>Redo</button>
+          <button id="importJson">Import JSON</button>
+          <input id="importFile" type="file" accept="application/json" style="display:none">
+        </div>
+
+        <div class="row">
+          <button id="exportJson">Export JSON</button>
+          <button id="exportPng">Export PNG</button>
+        </div>
+
+        <hr />
+        <h4>Map Info</h4>
+        <pre id="mapInfo" class="prop-info">No map data</pre>
+      </div>
+
+      <div id="tab-props" class="panel hidden">
+        <div class="prop-header">
+          <input id="propSearch" placeholder="Search props..." />
+          <button id="propReset" title="Reset search">✕</button>
+        </div>
+
+        <div id="propLibrary" class="prop-lib" aria-live="polite"></div>
+
+        <h4>Add Prop</h4>
+        <div class="control-row">
+          <input id="newPropId" placeholder="id (e.g. torch)" />
+          <input id="newPropName" placeholder="Name" />
+        </div>
+        <div class="control-row">
+          <input id="newPropUrl" placeholder="Image URL or data-url" />
+          <input id="newPropTiles" type="number" min="1" max="8" value="2" style="width:84px" />
+          <button id="addPropBtn">Add Prop</button>
+        </div>
+
+        <h4>Placed Props</h4>
+        <div id="placedPropsList" class="placed-list"></div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="map-editor.js"></script>
+</body>
+</html>
